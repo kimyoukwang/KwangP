@@ -9,14 +9,15 @@
 import Foundation
 
 
-
+//json파일입력
 let file : FileHandle? = FileHandle(forReadingAtPath: "/Users/kim-youkwang/students.json")
 let databuffer = file?.readDataToEndOfFile()
 let out: String = String(data:databuffer!, encoding:String.Encoding.utf8)!
 var data = out.data(using: .utf8)!
 
+//student 성적계산클래스
 class OurJSONParser {
-
+    //성적을구분
     func gradechk(avg: Int) -> (String){
         if avg >= 90 && avg <= 100{
             return "A"
@@ -36,7 +37,7 @@ class OurJSONParser {
         }
  
     }
-
+    //성적계산을통한string값반환
     func parseJSONResults() -> (String) {
         do {
                 if let json = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? [Dictionary<String,Any>]
@@ -108,10 +109,11 @@ class OurJSONParser {
     }
 }
 
+//student grading commit
 let parser = OurJSONParser()
 let result = parser.parseJSONResults()
-print(result)
 
+//write part
 let fileName = "result"
 let URL = FileManager.default.homeDirectory(forUser : "kim-youkwang" )
 let fileURL = URL?.appendingPathComponent(fileName).appendingPathExtension("txt")
